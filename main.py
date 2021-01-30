@@ -88,11 +88,11 @@ if __name__ == '__main__':
 
 
     @bot.command()
-    @commands.has_role("CSS-Committee")
     async def stop(ctx):
         """Stops the bot, if you have the right."""
-        await ctx.send("Shutting down...")
-        await bot.close()
+        if ctx.author.id == 344911466195058699 or discord.utils.get(ctx.guild.roles, name="CSS-Committee") in ctx.author.roles:
+            await ctx.send("Shutting down...")
+            await bot.close()
 
 
     bot.run('token')
