@@ -75,16 +75,23 @@ if __name__ == '__main__':
         else:
             modifier = int(modifier)
 
-        numberofdice = int(numberofdice)
-        numberofsides = int(numberofsides)
-        total = 0
+        try:
+            numberofdice = int(numberofdice)
+            numberofsides = int(numberofsides)
+            rolls = ""
+            total = 0
 
-        if numberofdice > 0:
-            for i in range(numberofdice):
-                total += round(random.randint(0, numberofsides), 1) + modifier
-            await ctx.send("Rolled: {0}".format(total))
-        else:
-            await ctx.send("I can't roll 0 dice. The answer is clearly 0...")
+            if numberofdice > 0:
+                for i in range(numberofdice):
+                    roll = round(random.randint(0, numberofsides), 1) + modifier
+                    total += roll
+                    rolls += "[" + str(roll) + "]" + " "
+                await ctx.send(rolls)
+                await ctx.send("Total: {0}".format(total))
+            else:
+                await ctx.send("I can't roll 0 dice. The answer is clearly 0...")
+        except:
+            await ctx.send("Whoopsie, something went wrong! `!help rollDie` for more info!")
 
 
     @bot.command()
@@ -93,6 +100,8 @@ if __name__ == '__main__':
         if ctx.author.id == 344911466195058699 or discord.utils.get(ctx.guild.roles, name="CSS-Committee") in ctx.author.roles:
             await ctx.send("Shutting down...")
             await bot.close()
+        else:
+            await ctx.send("Sorry, but you don't have the privileges to do that!")
 
 
     bot.run('token')
